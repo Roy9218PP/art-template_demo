@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>include-模板的包含</title>
+	</head>
+	<body>
+		
+		<script id="books" type="text/html">
+			<li>
+				<p></p>
+				<img src=""/>
+				<blockquote></blockquote>
+			</li>
+		</script>
+		
+		<script id="websit" type="text/html">
+			<li>
+				<a href=""></a>
+				<blockquote></blockquote>
+			</li>
+			
+		</script>
+		
+		<script id="template" type="text/html">
+			{{if list.length <= 0}}
+			
+				<h4>没有推荐内容</h4>
+			
+			{{else}}
+			
+			<section>
+				<ul>
+					{{each list as value}}
+						{{if value.type == 'book'}}
+						  {{include 'books' value}}
+						{{else}}
+						   {{include 'websit' value}}
+						{{/if}}  
+					{{/each}}
+				</ul>
+			</section>
+			
+			{{/if}}
+			
+		</script>
+		
+		<script type="text/javascript">
+			
+			var data = {
+				
+				title:'推荐的书籍和网站',
+				
+				list:[
+					{
+						type:'book',
+						name:'HTML5 CSS3权威指南',
+						img:'http://d.hiphotos.baidu.com/baike/w%3D268%3Bg%3D0/sign=930ba54b54e736d158138b0ea36b28ff/728da9773912b31b9b5426be8618367adab4e169.jpg',
+						description:'该书详尽地讲解了html 5和css 3的所有新功能和新特性；技术新颖，所有知识点都紧跟html 5与css 3的最新发展动态（html 5和css 3仍在不断完善之中）；实战性强（包含246个示例页面），不仅每个知识点都配有精心设计的小案例（便于动手实践），而且还有两个综合性的案例（体现用 html 5与css 3开发web应用的思维和方法）。本书不仅能满足你全面而系统地学习理论知识的需求，还能满足你需要充分实践的需求。'
+					},
+					{
+						type:'websit',
+						name:'MDN',
+						url:'http://developer.mozilla.org',
+						description:'Mozilla 开发者网络(MDN)提供有关开放网络技术(Open Web)的信息,包括 HTML、CSS 和万维网及 HTML5 应用的 API。它还记录了 Mozilla 产品的文档,例如 Firefox ...'
+					},
+					{
+						type:'websit',
+						name:'GitHub',
+						url:'http://www.github.com',
+						description:'gitHub可以托管各种git库，并提供一个web界面，但与其它像 SourceForge或Google Code这样的服务不同，GitHub的独特卖点在于从另外一个项目进行分支的简易性。为一个项目贡献代码非常简单：首先点击项目站点的“fork”的按钮，然后将代码检出并将修改加入到刚才分出的代码库中，最后通过内建的“pull request”机制向项目负责人申请代码合并。已经有人将GitHub称为代码玩家的MySpace。'
+					}
+				]
+			}
+			
+			//把数据渲染到id为template的模板
+			var html =  template('template',data)
+			
+			document.body.innerHTML = html
+			
+		</script>
+	</body>
+</html>
